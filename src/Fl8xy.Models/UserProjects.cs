@@ -1,6 +1,8 @@
-﻿namespace Fl8xy.Models
+﻿using Fl8xy.Data.Contracts;
+
+namespace Fl8xy.Models
 {
-    public class UserProjects
+    public class UserProjects : IEntity
     {
         public int ProjectId { get; set; }
 

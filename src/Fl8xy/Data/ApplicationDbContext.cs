@@ -4,6 +4,7 @@
     using Microsoft.EntityFrameworkCore;
 
     using Fl8xy.Models;
+    using Microsoft.EntityFrameworkCore.Metadata;
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
@@ -16,6 +17,12 @@
 
         public DbSet<UserProjects> UserProjects { get; set; }
 
+        public DbSet<Sprint> Sprints { get; set; }
+
+        public DbSet<State> States { get; set; }
+
+        public DbSet<Story> Stories { get; set; }
+        
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -31,6 +38,11 @@
                 .HasOne(x => x.Project)
                 .WithMany(x => x.Participants)
                 .HasForeignKey(x => x.ProjectId);
+
+            builder.Entity<Story>()
+                .HasOne(e => e.ParentStory)
+                .WithMany(x => x.Tasks)
+                .Metadata.DeleteBehavior = DeleteBehavior.Restrict;
         }
     }
 }
